@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Customer Segmentation Dashboard</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+body{
+background:#f4f7fc;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+.sidebar{
+position:fixed;
+left:0;
+top:0;
+width:250px;
+height:100%;
+background:#0d6efd;
+padding-top:20px;
+color:white;
+}
+
+.sidebar h3{
+text-align:center;
+margin-bottom:30px;
+}
+
+.sidebar a{
+display:block;
+padding:15px;
+color:white;
+text-decoration:none;
+transition:.3s;
+}
+
+.sidebar a:hover{
+background:white;
+color:#0d6efd;
+}
+
+.main{
+margin-left:260px;
+padding:25px;
+}
+
+.card{
+border:none;
+border-radius:15px;
+box-shadow:0px 8px 20px rgba(0,0,0,.08);
+}
+
+.chart{
+height:350px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+color:gray;
+}
+
+table{
+font-size:14px;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="sidebar">
+
+<h3>Customer Analytics</h3>
+
+<a href="#">Dashboard</a>
+<a href="#">Customers</a>
+<a href="#">Segments</a>
+<a href="#">Charts</a>
+<a href="#">Reports</a>
+
+</div>
+
+<div class="main">
+
+<div class="row mb-4">
+
+<div class="col">
+<h2>Customer Segmentation Dashboard</h2>
+<p class="text-muted">
+K-Means Clustering Analysis
+</p>
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="col-md-3">
+
+<div class="card p-3">
+
+<h6>Total Customers</h6>
+
+<h2>{{ total_customers }}</h2>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card p-3">
+
+<h6>Total Revenue</h6>
+
+<h2>${{ total_revenue }}</h2>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card p-3">
+
+<h6>Segments</h6>
+
+<h2>{{ total_segments }}</h2>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card p-3">
+
+<h6>Average LTV</h6>
+
+<h2>${{ avg_ltv }}</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="row">
+
+<div class="col-lg-8">
+
+<div class="card p-3">
+
+<h4>Customer Segmentation Analysis</h4>
+
+<img
+src="{{ url_for('static',filename='customer_segmentation_analysis.png') }}"
+class="img-fluid">
+
+</div>
+
+</div>
+
+<div class="col-lg-4">
+
+<div class="card p-3">
+
+<h4>Segment Summary</h4>
+
+<ul class="list-group">
+
+{% for seg in segment_summary %}
+
+<li class="list-group-item">
+
+<b>{{ seg.name }}</b>
+
+<br>
+
+Customers : {{ seg.size }}
+
+<br>
+
+Revenue : ${{ seg.revenue }}
+
+</li>
+
+{% endfor %}
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="card p-4">
+
+<h4>Recommendations</h4>
+
+<div class="row">
+
+<div class="col-md-6">
+
+<div class="alert alert-success">
+
+<h5>High Value Customers</h5>
+
+<ul>
+
+<li>Premium Membership</li>
+
+<li>Exclusive Discounts</li>
+
+<li>VIP Customer Support</li>
+
+<li>Personalized Offers</li>
+
+</ul>
+
+</div>
+
+</div>
+
+<div class="col-md-6">
+
+<div class="alert alert-warning">
+
+<h5>At Risk Customers</h5>
+
+<ul>
+
+<li>Send Coupons</li>
+
+<li>Email Campaign</li>
+
+<li>Cashback Offers</li>
+
+<li>Retention Strategy</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="card p-4">
+
+<h4>Customer Table</h4>
+
+<table class="table table-striped table-hover">
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Age</th>
+
+<th>Income</th>
+
+<th>Total Spent</th>
+
+<th>Segment</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for row in customers %}
+
+<tr>
+
+<td>{{ row.Customer_ID }}</td>
+
+<td>{{ row.Age }}</td>
+
+<td>{{ row.Annual_Income }}</td>
+
+<td>{{ row.Total_Spent }}</td>
+
+<td>
+
+<span class="badge bg-primary">
+
+{{ row.Segment_Name }}
+
+</span>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</body>
+</html>
